@@ -12,14 +12,11 @@ export default {
     'todo-list': TodoList
   },
   name: 'app',
-  data () {
-    return {
-      todos: [
-        { done: false, title: 'First item', key: 'oiqjwdoiqwjd' },
-        { done: true, title: 'Done item', key: 'oiqjoi12jd1' },
-      ]
+  computed: {
+    todos() {
+      return this.$store.state.todos
     }
-  }
+  },
 }
 </script>
 
@@ -30,6 +27,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
+  font-size: 14pt;
 }
 
 h1, h2 {
