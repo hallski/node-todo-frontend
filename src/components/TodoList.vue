@@ -1,5 +1,5 @@
 <template>
-  <div id="todo-list">
+  <div id="todo-list" v-if="items">
     <h2>Todo list</h2>
     <ul>
       <todo-item
@@ -10,6 +10,7 @@
     </ul>
     <button v-on:click="addItem">Add Item</button>
   </div>
+  <div id="waiting" v-else>Waiting for data</div>
 </template>
 
 <script>
@@ -32,8 +33,10 @@ export default {
     addItem: function() {
       this.$store.dispatch('addTodoItem', {title: 'New title'})
     }
+  },
+  beforeMount: function() {
+    this.$store.dispatch('fetchItems')
   }
-
 }
 </script>
 

@@ -1,20 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
-
+const api = axios.create({
+  baseURL: 'http://localhost:3333',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
 export const store = new Vuex.Store({
   strict: true,
   state: {
-    todos: [
-      { done: false, title: 'First item', key: 'oiqjwdoiqwjd' },
-      { done: true, title: 'Done item', key: 'oiqjoi12jd1' }
-    ]
+    todos: null
   },
   mutations: {
+    setTodoItems: (state, items) => {
+      state.todos = items
+    },
     addTodoItem: (state, payload) => {
-      payload.done = false
-      payload.key = '12312kl3j12io3j'
       state.todos.push(payload)
     },
     toggleItem: (state, itemId) => {
@@ -25,10 +29,20 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    fetchItems: (context) => {
+
+
+      console.log('Fetching')
+      api.get('items').then(response => {
+        context.commit('setTodoItems', response.data)
+      })
+    },
     addTodoItem: (context, payload) => {
-      setTimeout(function() {
-        context.commit('addTodoItem', payload)
-      }, 2000)
+      api.post('items', payload)
+        .then(res => {
+          console.log('Response: ' + JSON.stringify(res))
+          context.commit('addTodoItem', res.data)
+        })
     },
     toggleItem: (context, itemId) => {
       context.commit('toggleItem', itemId)
