@@ -3,12 +3,14 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 Vue.use(Vuex)
+
 const api = axios.create({
   baseURL: 'http://localhost:3333',
   headers: {
     'Content-Type': 'application/json'
   }
 })
+
 export const store = new Vuex.Store({
   strict: true,
   state: {
@@ -30,9 +32,6 @@ export const store = new Vuex.Store({
   },
   actions: {
     fetchItems: (context) => {
-
-
-      console.log('Fetching')
       api.get('items').then(response => {
         context.commit('setTodoItems', response.data)
       })
@@ -42,7 +41,7 @@ export const store = new Vuex.Store({
         .then(res => {
           console.log('Response: ' + JSON.stringify(res))
           context.commit('addTodoItem', res.data)
-        })
+      })
     },
     toggleItem: (context, itemId) => {
       context.commit('toggleItem', itemId)
