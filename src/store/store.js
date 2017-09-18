@@ -20,8 +20,8 @@ export const store = new Vuex.Store({
     setTodoItems: (state, items) => {
       state.todos = items
     },
-    addTodoItem: (state, payload) => {
-      state.todos.push(payload)
+    addTodoItem: (state, item) => {
+      state.todos.push(item)
     },
     toggleItem: (state, itemId) => {
       const item = state.todos.find(item => item.key === itemId)
