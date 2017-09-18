@@ -8,6 +8,7 @@
         v-bind:item="item">
       </todo-item>
     </ul>
+    <input type="text" v-model="newItemText" v-on:keyup.enter="addItem"/>
     <button v-on:click="addItem">Add Item</button>
   </div>
   <div id="waiting" v-else>Waiting for data</div>
@@ -26,13 +27,22 @@ export default {
       return _.sortBy(this.items, (item) => {
         return item.done
       })
+    },
+    canAdd: function() {
+      return this.newItemText !== ''
     }
   },
   props: ['items'],
+  data: {
+    newItemText: ''
+  },
   methods: {
     addItem: function() {
-      this.$store.dispatch('addTodoItem', {title: 'New title'})
-    }
+      if (this.newItemText !== '') {
+        this.$store.dispatch('addTodoItem', {title: this.newItemText})
+        this.newItemText = ''
+      }
+   }
   },
   beforeMount: function() {
     this.$store.dispatch('fetchItems')
