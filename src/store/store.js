@@ -42,7 +42,6 @@ export const store = new Vuex.Store({
     addTodoItem: (context, payload) => {
       api.post('items', payload)
         .then(res => {
-          console.log('Response: ' + JSON.stringify(res))
           context.commit('addTodoItem', res.data)
       })
     },
@@ -50,7 +49,6 @@ export const store = new Vuex.Store({
       context.commit('toggleItem', itemId)
     },
     removeItem: (context, itemId) => {
-      console.log('Revmoing item:', itemId)
       api.delete(`/items/${itemId}`).then(response => {
         if(response.status === 200) {
           context.commit('removeItem', itemId)

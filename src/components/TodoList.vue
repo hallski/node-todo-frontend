@@ -33,8 +33,10 @@ export default {
     }
   },
   props: ['items'],
-  data: {
-    newItemText: ''
+  data: function() {
+    return {
+      newItemText: ''
+    }
   },
   methods: {
     addItem: function() {
