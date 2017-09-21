@@ -1,8 +1,9 @@
 <template>
   <li>
-    <span @click="checkChanged(item.key)" v-bind:class="{done: item.done}">
-      <span class="glyphicon" v-bind:class="itemClass"></span>
+    <span v-bind:class="{done: item.done}">
+      <span @click="checkChanged(item.key)"class="glyphicon" v-bind:class="itemClass"></span>
       <span class="item-title">{{ item.title }}</span>
+      <span class="glyphicon glyphicon-remove" @click="removeItem(item.key)"></span>
     </span>
   </li>
 </template>
@@ -15,6 +16,9 @@ export default {
       console.log('Clicking ' + item)
       console.log(this.$store.state.todos[0])
       this.$store.dispatch('toggleItem', item)
+    },
+    removeItem: function(item) {
+      this.$store.dispatch('removeItem', item)
     }
   },
   computed: {

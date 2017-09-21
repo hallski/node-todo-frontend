@@ -28,6 +28,9 @@ export const store = new Vuex.Store({
       if (item) {
         item.done = !item.done
       }
+    },
+    removeItem: (state, itemId) => {
+      state.todos = state.todos.filter(item => item.key !== itemId)
     }
   },
   actions: {
@@ -45,6 +48,14 @@ export const store = new Vuex.Store({
     },
     toggleItem: (context, itemId) => {
       context.commit('toggleItem', itemId)
+    },
+    removeItem: (context, itemId) => {
+      console.log('Revmoing item:', itemId)
+      api.delete(`/items/${itemId}`).then(response => {
+        if(response.status === 200) {
+          context.commit('removeItem', itemId)
+        }
+      })
     }
   }
 })
