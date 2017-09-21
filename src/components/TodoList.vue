@@ -19,9 +19,7 @@ import TodoItem from './TodoItem.vue'
 const _ = require('lodash')
 
 export default {
-  components: {
-    'todo-item': TodoItem
-  },
+  name: 'todo-list',
   computed: {
     sortedItems: function() {
       return _.sortBy(this.items, (item) => {
@@ -48,8 +46,11 @@ export default {
   },
   beforeMount: function() {
     this.$store.dispatch('fetchItems')
+  },
+  components: {
+    TodoItem
   }
-}
+ }
 </script>
 
 

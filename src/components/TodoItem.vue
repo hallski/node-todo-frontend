@@ -14,6 +14,7 @@
 
 <script>
 export default {
+  name: 'todo-item',
   props: ['item'],
   methods: {
     checkChanged: function() {

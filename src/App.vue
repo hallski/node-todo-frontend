@@ -9,7 +9,7 @@ import TodoList from './components/TodoList.vue'
 
 export default {
   components: {
-    'todo-list': TodoList
+    TodoList
   },
   name: 'app',
   computed: {
