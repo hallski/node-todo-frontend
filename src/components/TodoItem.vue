@@ -1,10 +1,12 @@
 <template>
   <transition name="fade">
     <li>
-      <span v-bind:class="{done: item.done}">
-        <span @click="checkChanged(item.key)" class="glyphicon" v-bind:class="itemClass"></span>
+      <span v-bind:class="{done: item.done}" class="trigger">
+        <input type="checkbox" :value="item.done" @click="checkChanged"/>
         <span class="item-title">{{ item.title }}</span>
-        <span class="glyphicon glyphicon-remove" @click="removeItem(item.key)"></span>
+        <button type="button" class="btn btn-danger btn-xs delete-button" @click="removeItem">
+          Remove
+        </button>
       </span>
     </li>
   </transition>
@@ -14,17 +16,11 @@
 export default {
   props: ['item'],
   methods: {
-    checkChanged: function(item) {
-      this.$store.dispatch('toggleItem', item)
+    checkChanged: function() {
+      this.$store.dispatch('toggleItem', this.item.key)
     },
-    removeItem: function(item) {
-      this.$store.dispatch('removeItem', item)
-    }
-  },
-  computed: {
-    itemClass: function() {
-      return [this.item.done ? 'glyphicon-check' : 'glyphicon-unchecked']
-
+    removeItem: function() {
+      this.$store.dispatch('removeItem', this.item.key)
     }
   }
 }
@@ -44,6 +40,14 @@ export default {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.delete-button {
+  display: none;
+}
+
+.trigger:hover .delete-button {
+  display: inline;
 }
 
 </style>
