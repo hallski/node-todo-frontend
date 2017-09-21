@@ -20,17 +20,19 @@ export const store = new Vuex.Store({
     setTodoItems: (state, items) => {
       state.todos = items
     },
-    addTodoItem: (state, item) => {
+    addItem: (state, item) => {
       state.todos.push(item)
     },
-    toggleItem: (state, itemId) => {
-      const item = state.todos.find(item => item.key === itemId)
+    updateItem: (state, updates) => {
+      const item = state.todos.find(i => i.key === updates.key)
       if (item) {
-        item.done = !item.done
+        for (const prop in updates) {
+          item[prop] = updates[prop]
+        }
       }
     },
-    removeItem: (state, itemId) => {
-      state.todos = state.todos.filter(item => item.key !== itemId)
+    removeItem: (state, item) => {
+      state.todos = state.todos.filter(i => i.key !== item.key)
     }
   },
   actions: {
@@ -42,16 +44,16 @@ export const store = new Vuex.Store({
     addTodoItem: (context, payload) => {
       api.post('items', payload)
         .then(res => {
-          context.commit('addTodoItem', res.data)
+          context.commit('addItem', res.data)
       })
     },
-    toggleItem: (context, itemId) => {
-      context.commit('toggleItem', itemId)
+    toggleItem: (context, item) => {
+      context.commit('updateItem', {key: item.key, done: !item.done})
     },
-    removeItem: (context, itemId) => {
-      api.delete(`/items/${itemId}`).then(response => {
+    removeItem: (context, item) => {
+      api.delete(`/items/${item.key}`).then(response => {
         if(response.status === 200) {
-          context.commit('removeItem', itemId)
+          context.commit('removeItem', item)
         }
       })
     }

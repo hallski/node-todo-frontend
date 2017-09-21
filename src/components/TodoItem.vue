@@ -18,10 +18,10 @@ export default {
   props: ['item'],
   methods: {
     checkChanged: function() {
-      this.$store.dispatch('toggleItem', this.item.key)
+      this.$store.dispatch('toggleItem', this.item)
     },
     removeItem: function() {
-      this.$store.dispatch('removeItem', this.item.key)
+      this.$store.dispatch('removeItem', this.item)
     }
   }
 }
